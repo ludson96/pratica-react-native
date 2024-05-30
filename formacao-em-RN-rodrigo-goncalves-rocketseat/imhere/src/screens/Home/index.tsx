@@ -1,10 +1,12 @@
-import React from 'react'
-import { Text, TextInput, View, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
+import { Text, TextInput, View, TouchableOpacity, ScrollView } from 'react-native'
 import styles from './styles';
 import Participant from '../../components/Participant';
-import { inputExampleMap } from '../../data/InputMap';
 
 export default function Home() {
+  // const participant = useState(['Teste'])
+  const participant = ['Ludson', 'Ludson1','Ludson2','Ludson3','Ludson4','Ludson5','Ludson6','Ludson7','Ludson8','Ludson9','Ludson10', 'Ludson11','Ludson12']
+
   function handleAddParticipant(name: string) {
     console.log(`Participante ${name} adicionado com sucesso!`);
   }
@@ -37,9 +39,17 @@ export default function Home() {
         </TouchableOpacity>
       </View>
 
-      {inputExampleMap.map((person) => {
-        return <Participant name={person.name} onRemove={() => handleRemoveParticipant(person.name)} />
-      })}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {
+          participant.map((person) => (
+            <Participant
+              key={person}
+              name={person}
+              onRemove={() => handleRemoveParticipant(person)}
+            />
+          ))
+        }
+      </ScrollView>
 
     </View>
   )
