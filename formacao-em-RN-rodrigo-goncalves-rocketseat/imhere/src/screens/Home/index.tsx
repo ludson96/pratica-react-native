@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
-import { Text, TextInput, View, TouchableOpacity, ScrollView } from 'react-native'
+import { Text, TextInput, View, TouchableOpacity, FlatList } from 'react-native'
 import styles from './styles';
 import Participant from '../../components/Participant';
 
 export default function Home() {
-  // const participant = useState(['Teste'])
-  const participant = ['Ludson', 'Ludson1','Ludson2','Ludson3','Ludson4','Ludson5','Ludson6','Ludson7','Ludson8','Ludson9','Ludson10', 'Ludson11','Ludson12']
+  // const participant = useState([])
+  const participant = ['Ludson', 'Ludson1', 'Ludson2', 'Ludson3', 'Ludson4', 'Ludson5', 'Ludson6', 'Ludson7', 'Ludson8', 'Ludson9', 'Ludson10', 'Ludson11', 'Ludson12']
 
   function handleAddParticipant(name: string) {
     console.log(`Participante ${name} adicionado com sucesso!`);
@@ -39,17 +38,22 @@ export default function Home() {
         </TouchableOpacity>
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {
-          participant.map((person) => (
-            <Participant
-              key={person}
-              name={person}
-              onRemove={() => handleRemoveParticipant(person)}
-            />
-          ))
-        }
-      </ScrollView>
+      <FlatList
+        data={participant}
+        keyExtractor={item => item}
+        ListEmptyComponent={() => (
+            <Text style={styles.listEmptyText}>
+              Nenhum participante cadastrado.
+            </Text>
+        )}
+        renderItem={({ item }) => (
+          <Participant
+            key={item}
+            name={item}
+            onRemove={() => handleRemoveParticipant(item)}
+          />
+        )}
+      />
 
     </View>
   )
