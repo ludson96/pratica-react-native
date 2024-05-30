@@ -24,7 +24,7 @@ export default StyleSheet.create({
     color: '#FFF',
     fontSize: 16,
     padding: 16,
-    
+    marginRight: 12
   },
   buttonText: {
     color: '#FFF',
@@ -41,6 +41,7 @@ export default StyleSheet.create({
   form: {
     width: '100%',
     flexDirection: 'row',
-    marginTop: 36
+    marginTop: 36,
+    marginBottom: 42,
   } 
 })
