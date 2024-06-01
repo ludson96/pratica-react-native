@@ -16,11 +16,18 @@ export default function Home() {
     setParticipantName('');
   }
 
+  function removeParticipant(name: string) {
+    return setParticipants(prevState => prevState.filter(p => p !== name))
+  }
+
   function handleRemoveParticipant(name: string) {
+
+
+
     Alert.alert("Remover", `Deseja remover o participante ${name}?`, [
       {
         text: 'Sim',
-        onPress: () => setParticipants
+        onPress: () => removeParticipant
       },
       {
         text: 'Não',
