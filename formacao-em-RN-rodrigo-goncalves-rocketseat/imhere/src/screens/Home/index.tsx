@@ -8,9 +8,15 @@ export default function Home() {
   const [participantName, setParticipantName] = useState('')
 
   function handleAddParticipant() {
-    if (participants.includes(participantName)) {
-      return Alert.alert("Participante já existe", `Participante ${participantName} já está cadastrado`)
-    }
+  // Normaliza o nome do participante atual para maiúsculas
+  const normalizedParticipantName = participantName.toUpperCase();
+  
+  // Use find para localizar o participante existente
+  const existingParticipant = participants.find(participant => participant.toUpperCase() === normalizedParticipantName);
+
+  if (existingParticipant) {
+    return Alert.alert("Participante já existe", `Participante ${existingParticipant} já está cadastrado`);
+  }
 
     setParticipants(prevState => [...prevState, participantName])
     setParticipantName('');
@@ -21,21 +27,16 @@ export default function Home() {
   }
 
   function handleRemoveParticipant(name: string) {
-
-
-
     Alert.alert("Remover", `Deseja remover o participante ${name}?`, [
       {
         text: 'Sim',
-        onPress: () => removeParticipant
+        onPress: () => removeParticipant(name)
       },
       {
         text: 'Não',
         style: 'cancel'
       }
     ])
-
-    console.log(`Participante ${name} removido com sucesso!`);
   }
 
   return (
