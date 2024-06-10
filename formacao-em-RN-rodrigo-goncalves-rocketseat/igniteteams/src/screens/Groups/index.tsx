@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { Container, Qualquer } from './style';
+import { Container, Title } from './style';
 
 export default function Groups() {
   return (
     <Container>
-      <Qualquer>AAAAAAAAAAAAAAA</Qualquer>
+      <Title>Groups</Title>
     </Container>
   );
 }
