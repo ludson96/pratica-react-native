@@ -1,4 +1,3 @@
-import { Roboto_100Thin } from '@expo-google-fonts/roboto';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
