@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { Container, Title } from './style';
+import { Container } from './style';
+import Header from '../../components/Header';
 
 export default function Groups() {
   return (
-    <>
-      <Container>
-        <Title>Teste</Title>
-      </Container>
-    </>
+    <Container>
+      <Header />
+    </Container>
   );
 }
