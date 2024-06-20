@@ -5,11 +5,10 @@ import { Container } from './style';
 import GroupCard from '../../components/GroupCard';
 import Header from '../../components/Header';
 import Highlight from '../../components/Highlight';
-
-import { Title } from '~/components/GroupCard/styles';
+import ListEmpty from '../../components/ListEmpty';
 
 export default function Groups() {
-  const [groups, setGroups] = useState<string[]>();
+  const [groups, setGroups] = useState<string[]>([]);
 
   return (
     <Container>
@@ -19,8 +18,9 @@ export default function Groups() {
       <FlatList
         data={groups}
         keyExtractor={(item) => item}
-        ListEmptyComponent={() => <Title>Nenhum participante cadastrado.</Title>}
         renderItem={({ item }) => <GroupCard title={item} />}
+        ListEmptyComponent={() => <ListEmpty message="Nenhuma turma cadastrada." />}
+        contentContainerStyle={groups.length === 0 && { flex: 1 }}
       />
     </Container>
   );
