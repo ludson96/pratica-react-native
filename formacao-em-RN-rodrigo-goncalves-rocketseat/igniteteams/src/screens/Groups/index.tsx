@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 
-import { Container } from './style';
+import { Container } from './styles';
 import Button from '../../components/Button';
 import GroupCard from '../../components/GroupCard';
 import Header from '../../components/Header';
 import Highlight from '../../components/Highlight';
 import ListEmpty from '../../components/ListEmpty';
+import Input from '../../components/input';
 
 export default function Groups() {
   const [groups, setGroups] = useState<string[]>([]);
@@ -23,6 +24,8 @@ export default function Groups() {
         ListEmptyComponent={() => <ListEmpty message="Nenhuma turma cadastrada." />}
         contentContainerStyle={groups.length === 0 && { flex: 1 }}
       />
+
+      <Input />
 
       <Button title="Criar um novo grupo" />
     </Container>
