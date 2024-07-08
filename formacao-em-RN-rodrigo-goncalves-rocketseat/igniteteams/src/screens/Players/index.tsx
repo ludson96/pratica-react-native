@@ -8,11 +8,12 @@ import { Form } from '~/components/ButtonIcon/styles';
 import Filter from '~/components/Filter';
 import Header from '~/components/Header';
 import Highlight from '~/components/Highlight';
+import PlayerCard from '~/components/PlayerCard';
 import Input from '~/components/input';
 
 export default function Players() {
   const [team, setTeam] = useState('Time A');
-  const [players, setPlayers] = useState([]);
+  const [players, setPlayers] = useState(['Ludson01', 'Ludson02']);
 
   return (
     <Container>
@@ -36,6 +37,12 @@ export default function Players() {
         />
         <NumberOfPlayers>{players.length}</NumberOfPlayers>
       </HeaderList>
+
+      <FlatList
+        data={players}
+        keyExtractor={(item) => item}
+        renderItem={({ item }) => <PlayerCard name={item} onRemove={() => {}} />}
+      />
     </Container>
   );
 }
