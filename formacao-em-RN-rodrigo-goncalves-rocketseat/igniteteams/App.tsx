@@ -3,9 +3,7 @@ import { StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components';
 
 import Loading from './src/components/Loading';
-import Groups from './src/screens/Groups';
-import NewGroup from './src/screens/NewGroup';
-import Players from './src/screens/Players';
+import Routes from './src/routes';
 import theme from './src/theme';
 
 export default function App() {
@@ -13,8 +11,10 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
-      {fontsLoaded ? <Players /> : <Loading />}
+      <>
+        <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+        {fontsLoaded ? <Routes /> : <Loading />}
+      </>
     </ThemeProvider>
   );
 }
