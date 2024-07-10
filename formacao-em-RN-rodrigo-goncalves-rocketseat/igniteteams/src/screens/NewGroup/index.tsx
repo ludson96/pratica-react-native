@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 
 import { Container, Content, Icon } from './styles';
@@ -10,7 +11,11 @@ import Input from '~/components/input';
 export default function NewGroup() {
   const [group, setGroup] = useState('');
 
-  async function handleNew() {}
+  const navigation = useNavigation();
+
+  async function handleNew() {
+    navigation.navigate('players', { group });
+  }
 
   return (
     <Container>

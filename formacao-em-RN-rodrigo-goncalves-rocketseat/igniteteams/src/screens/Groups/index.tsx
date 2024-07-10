@@ -32,8 +32,6 @@ export default function Groups() {
         contentContainerStyle={groups.length === 0 && { flex: 1 }}
       />
 
-      <Input />
-
       <Button title="Criar um novo grupo" onPress={handleNewGroup} />
     </Container>
   );
