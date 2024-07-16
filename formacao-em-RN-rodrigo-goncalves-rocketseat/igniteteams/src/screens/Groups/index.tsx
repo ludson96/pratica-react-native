@@ -1,5 +1,5 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { FlatList } from 'react-native';
 
 import { Container } from './styles';
@@ -29,6 +29,10 @@ export default function Groups() {
     }
   }
 
+  function handleOpenGroup(group: string) {
+    navigation.navigate('players', { group });
+  }
+
   useFocusEffect(
     useCallback(() => {
       fetchGroups();
@@ -43,7 +47,7 @@ export default function Groups() {
       <FlatList
         data={groups}
         keyExtractor={(item) => item}
-        renderItem={({ item }) => <GroupCard title={item} />}
+        renderItem={({ item }) => <GroupCard title={item} onPress={() => handleOpenGroup(item)} />}
         ListEmptyComponent={() => <ListEmpty message="Nenhuma turma cadastrada." />}
         contentContainerStyle={groups.length === 0 && { flex: 1 }}
       />
