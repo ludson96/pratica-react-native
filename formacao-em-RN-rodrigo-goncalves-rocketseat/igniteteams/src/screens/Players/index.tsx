@@ -1,5 +1,5 @@
 import { useRoute } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, FlatList } from 'react-native';
 
 import { Container, HeaderList, NumberOfPlayers } from './style';
@@ -13,7 +13,9 @@ import Highlight from '~/components/Highlight';
 import ListEmpty from '~/components/ListEmpty';
 import PlayerCard from '~/components/PlayerCard';
 import Input from '~/components/input';
+import { PlayerStorageDTO } from '~/storage/player/PlayerStorageDTO';
 import { playerAddByGroup } from '~/storage/player/playerAddByGroup';
+import { playersGetByGroupAndTeam } from '~/storage/player/playersGetByGroupAndTeam';
 import { AppError } from '~/utils/AppError';
 
 type RouteParams = {
@@ -22,7 +24,7 @@ type RouteParams = {
 
 export default function Players() {
   const [team, setTeam] = useState('Time A');
-  const [players, setPlayers] = useState(['Ludson']);
+  const [players, setPlayers] = useState<PlayerStorageDTO[]>([]);
   const [newPlayerName, setNewPlayerName] = useState('');
 
   const route = useRoute();
@@ -40,6 +42,7 @@ export default function Players() {
 
     try {
       await playerAddByGroup(newPlayer, group);
+      fetchPlayersByTeam();
     } catch (error) {
       if (error instanceof AppError) {
         Alert.alert('Nova pessoa', error.message);
@@ -49,6 +52,20 @@ export default function Players() {
       }
     }
   }
+
+  async function fetchPlayersByTeam() {
+    try {
+      const playersByTeam = await playersGetByGroupAndTeam(group, team);
+      setPlayers(playersByTeam);
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Pessoas', 'Não foi possivel carregar as pessoas do time selecionado.');
+    }
+  }
+
+  useEffect(() => {
+    fetchPlayersByTeam();
+  }, [team]);
 
   return (
     <Container>
@@ -75,8 +92,8 @@ export default function Players() {
 
       <FlatList
         data={players}
-        keyExtractor={(item) => item}
-        renderItem={({ item }) => <PlayerCard name={item} onRemove={() => {}} />}
+        keyExtractor={(item) => item.name}
+        renderItem={({ item }) => <PlayerCard name={item.name} onRemove={() => {}} />}
         ListEmptyComponent={<ListEmpty message="Nenhum usuário ingressou na turma" />}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[{ paddingBottom: 100 }, players.length === 0 && { flex: 1 }]}
