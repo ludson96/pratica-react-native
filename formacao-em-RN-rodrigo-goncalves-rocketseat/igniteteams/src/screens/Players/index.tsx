@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
-import { Alert, FlatList } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Alert, FlatList, TextInput } from 'react-native';
 
 import { Container, HeaderList, NumberOfPlayers } from './style';
 
@@ -30,6 +30,8 @@ export default function Players() {
   const route = useRoute();
   const { group } = route.params as RouteParams;
 
+  const newPlayerNameInputRef = useRef<TextInput>(null);
+
   async function handleAddPLayer() {
     if (newPlayerName.trim().length === 0) {
       return Alert.alert('Nova pessoa', 'Informe o nome da pessoa para adicionar.');
@@ -42,6 +44,10 @@ export default function Players() {
 
     try {
       await playerAddByGroup(newPlayer, group);
+
+      newPlayerNameInputRef.current?.blur();
+
+      setNewPlayerName('');
       fetchPlayersByTeam();
     } catch (error) {
       if (error instanceof AppError) {
@@ -74,7 +80,15 @@ export default function Players() {
       <Highlight title={group} subtitle="Adicione a galera e separe os times" />
 
       <Form>
-        <Input placeholder="Nome da pessoa" autoCorrect={false} onChangeText={setNewPlayerName} />
+        <Input
+          placeholder="Nome da pessoa"
+          autoCorrect={false}
+          onChangeText={setNewPlayerName}
+          value={newPlayerName}
+          inputRef={newPlayerNameInputRef}
+          onSubmitEditing={handleAddPLayer}
+          returnKeyType="done"
+        />
         <ButtonIcon icon="add" onPress={handleAddPLayer} />
       </Form>
 
