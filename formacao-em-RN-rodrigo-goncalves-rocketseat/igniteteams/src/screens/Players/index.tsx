@@ -15,6 +15,7 @@ import PlayerCard from '~/components/PlayerCard';
 import Input from '~/components/input';
 import { PlayerStorageDTO } from '~/storage/player/PlayerStorageDTO';
 import { playerAddByGroup } from '~/storage/player/playerAddByGroup';
+import { playerRemoveByGroup } from '~/storage/player/playerRemoveByGroup';
 import { playersGetByGroupAndTeam } from '~/storage/player/playersGetByGroupAndTeam';
 import { AppError } from '~/utils/AppError';
 
@@ -69,6 +70,16 @@ export default function Players() {
     }
   }
 
+  async function handlePLayerRemove(playerName: string) {
+    try {
+      await playerRemoveByGroup(playerName, group);
+      fetchPlayersByTeam();
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Remove pessoa', 'Não foi possivel remover essa pessoa.');
+    }
+  }
+
   useEffect(() => {
     fetchPlayersByTeam();
   }, [team]);
@@ -107,7 +118,9 @@ export default function Players() {
       <FlatList
         data={players}
         keyExtractor={(item) => item.name}
-        renderItem={({ item }) => <PlayerCard name={item.name} onRemove={() => {}} />}
+        renderItem={({ item }) => (
+          <PlayerCard name={item.name} onRemove={() => handlePLayerRemove(item.name)} />
+        )}
         ListEmptyComponent={<ListEmpty message="Nenhum usuário ingressou na turma" />}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[{ paddingBottom: 100 }, players.length === 0 && { flex: 1 }]}
